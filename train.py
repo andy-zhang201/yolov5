@@ -7,6 +7,8 @@ Usage - Single-GPU training:
     $ python train.py --data coco128.yaml --weights yolov5s.pt --img 640  # from pretrained (recommended)
     $ python train.py --data coco128.yaml --weights '' --cfg yolov5s.yaml --img 640  # from scratch
 
+    python train.py --data UAVDT.yaml --weights yolov5n.pt --img 640 --batch 16 --epochs 50 --save-period 5 --name benchmark_model --cache
+
 Usage - Multi-GPU DDP training:
     $ python -m torch.distributed.run --nproc_per_node 4 --master_port 1 train.py --data coco128.yaml --weights yolov5s.pt --img 640 --device 0,1,2,3
 

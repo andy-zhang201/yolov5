@@ -37,6 +37,8 @@ class Albumentations:
                 A.RandomBrightnessContrast(p=0.0),
                 A.RandomGamma(p=0.0),
                 A.ImageCompression(quality_lower=75, p=0.0)]  # transforms
+            
+
             self.transform = A.Compose(T, bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
 
             LOGGER.info(prefix + ', '.join(f'{x}'.replace('always_apply=False, ', '') for x in T if x.p))
@@ -50,6 +52,8 @@ class Albumentations:
             new = self.transform(image=im, bboxes=labels[:, 1:], class_labels=labels[:, 0])  # transformed
             im, labels = new['image'], np.array([[c, *b] for c, b in zip(new['class_labels'], new['bboxes'])])
         return im, labels
+
+# def raindrops(x, mean=IMAGENET_MEAN, std=IMAGENET_STD, inplace=False):
 
 
 def normalize(x, mean=IMAGENET_MEAN, std=IMAGENET_STD, inplace=False):

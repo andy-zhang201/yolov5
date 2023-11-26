@@ -2,6 +2,8 @@
 """
 Validate a trained YOLOv5 detection model on a detection dataset
 
+python val.py --task test --name testlr1 --data UAVDT.yaml --img 640 --weights best.pt
+
 Usage:
     $ python val.py --weights yolov5s.pt --data coco128.yaml --img 640
 
@@ -338,7 +340,7 @@ def run(
         maps[c] = ap[i]
     return (mp, mr, map50, map, *(loss.cpu() / len(dataloader)).tolist()), maps, t
 
-
+# python val.py --data UAVDT.yaml --weights runs/train/benchmark_model/weights/best.pt --batch-size 16 --img 640 --task test --name testlr1  --project runs/test 
 def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='dataset.yaml path')
