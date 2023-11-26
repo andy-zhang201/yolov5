@@ -29,14 +29,32 @@ class Albumentations:
             check_version(A.__version__, '1.0.3', hard=True)  # version requirement
 
             T = [
-                A.RandomResizedCrop(height=size, width=size, scale=(0.8, 1.0), ratio=(0.9, 1.11), p=0.0),
-                A.Blur(p=0.01),
-                A.MedianBlur(p=0.01),
-                A.ToGray(p=0.01),
-                A.CLAHE(p=0.01),
-                A.RandomBrightnessContrast(p=0.0),
-                A.RandomGamma(p=0.0),
-                A.ImageCompression(quality_lower=75, p=0.0)]  # transforms
+                # A.Downscale(always_apply=False, p=0.2, scale_min=0.5, scale_max=0.6)
+                # A.Perspective(),
+                # A.RandomCropFromBorders(),
+                # A.Flip(),
+                # A.MotionBlur(),
+                # A.MedianBlur(),
+                
+                ##Weather transforms
+                # A.ToSepia(),
+                # A.RandomFog(),
+                # A.RandomSnow(),
+                # A.RandomRain(),
+                # A.RandomSunFlare(),
+                # A.RandomShadow(),
+
+                # ##Colour Transforms
+                # A.RandomBrightness(),
+                # A.RandomContrast(),
+                # A.ColorJitter(),
+                A.OneOf([
+                        A.RandomRain(always_apply=False, p=0.3, slant_lower=-10, slant_upper=10, drop_length=20, drop_width=1, drop_color=(0, 56, 103), blur_value=6, brightness_coefficient=0.7, rain_type=None),
+                        A.Blur(p=0.1),
+                        A.ToGray(p=0.1),
+                        ], p=0
+                    )
+                ]  # transforms
             
 
             self.transform = A.Compose(T, bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
